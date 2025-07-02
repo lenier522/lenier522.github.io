@@ -1,10 +1,905 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Tu Nombre</title>
-  </head>
-  <body>
-    <h1>¡Hola, soy [Tu Nombre]!</h1>
-    <p>Bienvenido a mi portafolio.</p>
-  </body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LenierIA - Buscador Semántico Avanzado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #00ff9d;
+            --warning: #f59e0b;
+            --danger: #ff3366;
+            --light: #f8fafc;
+            --dark: #0a0a14;
+            --darker: #05050c;
+            --gray: #64748b;
+            --gray-light: #a1a1aa;
+            --glass: rgba(20, 20, 30, 0.7);
+            --card-bg: rgba(30, 30, 45, 0.6);
+            --border-radius: 16px;
+            --border-radius-lg: 24px;
+            --border-radius-xl: 32px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', 'Manrope', 'Inter', sans-serif;
+        }
+        
+        body {
+            background: radial-gradient(ellipse at bottom, var(--darker) 0%, var(--dark) 100%);
+            min-height: 100vh;
+            padding: 1.5rem;
+            color: var(--light);
+            line-height: 1.6;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Glassmorphism Container */
+        .glass-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--border-radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Futuristic Header */
+        .header {
+            text-align: center;
+            padding: 4rem 1.5rem 3rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            z-index: -1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(transparent, var(--primary), transparent);
+            animation: rotate 3s linear infinite;
+        }
+        
+        .logo-inner {
+            width: 92%;
+            height: 92%;
+            background: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        
+        .logo-inner i {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.8;
+            font-weight: 300;
+            color: var(--gray-light);
+        }
+        
+        .ai-tag {
+            display: inline-block;
+            margin-top: 1rem;
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--success);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+        }
+        
+        /* Search Container */
+        .search-container {
+            padding: 2.5rem;
+            position: relative;
+        }
+        
+        .info-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--success);
+            padding: 1.25rem;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 0.75rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .info-icon {
+            color: var(--success);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .info-box p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 1.5rem 1.8rem;
+            background: rgba(15, 15, 25, 0.6);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: var(--border-radius);
+            font-size: 1.15rem;
+            transition: var(--transition);
+            color: var(--light);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
+        }
+        
+        .search-input::placeholder {
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3), 0 5px 20px rgba(99, 102, 241, 0.2);
+            background: rgba(15, 15, 25, 0.8);
+        }
+        
+        .search-button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0 2.8rem;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .search-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .search-button:hover::before {
+            left: 100%;
+        }
+        
+        .search-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+        
+        .search-button:active {
+            transform: translateY(0);
+        }
+        
+        .search-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+            color: var(--gray-light);
+        }
+        
+        .stats-badge {
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--success);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+        }
+        
+        /* Results */
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+        
+        .result-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .result-card:hover::before {
+            opacity: 1;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+        
+        .result-header {
+            padding: 1.5rem;
+            background: linear-gradient(to right, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .result-title {
+            font-weight: 700;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .similarity {
+            background: linear-gradient(to right, var(--success), #00d18c);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 15px rgba(0, 255, 157, 0.2);
+        }
+        
+        .result-content {
+            padding: 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .result-text {
+            line-height: 1.8;
+            margin-bottom: 1.8rem;
+            flex: 1;
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+        
+        .result-source {
+            font-size: 0.95rem;
+            color: var(--gray-light);
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* Loading & States */
+        .loading {
+            text-align: center;
+            padding: 3rem 0;
+            grid-column: 1 / -1;
+            position: relative;
+        }
+        
+        .loading-spinner {
+            width: 70px;
+            height: 70px;
+            border: 5px solid rgba(99, 102, 241, 0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 1.8rem;
+            animation: spin 1.2s linear infinite;
+            position: relative;
+        }
+        
+        .loading-spinner::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid transparent;
+            border-top-color: var(--accent);
+            top: -5px;
+            left: -5px;
+            animation: spin 1.5s linear infinite reverse;
+        }
+        
+        .loading-text {
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .loading-text::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+        
+        .no-results, .error-container {
+            text-align: center;
+            padding: 3.5rem 2.5rem;
+            grid-column: 1 / -1;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .no-results::before, .error-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05));
+            z-index: -1;
+        }
+        
+        .no-results i, .error-container i {
+            font-size: 4rem;
+            margin-bottom: 1.8rem;
+            opacity: 0.7;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .no-results h3, .error-container h3 {
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(to right, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .no-results p, .error-container p {
+            margin-bottom: 1.8rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+        
+        .error-list {
+            text-align: left;
+            max-width: 550px;
+            margin: 0 auto;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--danger);
+            font-size: 1.05rem;
+        }
+        
+        .error-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .error-list li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .error-list li::before {
+            content: '•';
+            color: var(--danger);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0 2.5rem;
+            color: var(--gray);
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+        }
+        
+        /* Animations */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Particle Background Effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+            filter: blur(1px);
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.05;
+            }
+            50% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0.05;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .results-container {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 3rem 1rem 2rem;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.15rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-button {
+                padding: 1.5rem;
+                justify-content: center;
+            }
+            
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-container {
+                padding: 1.8rem;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1.05rem;
+            }
+            
+            .info-box p {
+                font-size: 0.95rem;
+            }
+            
+            .search-input {
+                padding: 1.3rem 1.5rem;
+            }
+            
+            .glass-container {
+                border-radius: var(--border-radius-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="glass-container">
+            <header class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-inner">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                    </div>
+                    <h1>Lenier AI</h1>
+                    <p>Búsqueda semántica avanzada con inteligencia artificial</p>
+                    <span class="ai-tag">Powered by Deep Learning</span>
+                </div>
+            </header>
+            
+            <main>
+                <div class="search-container">
+                    <div class="info-box">
+                        <i class="fas fa-info-circle info-icon"></i>
+                        <p>Escribe tu consulta en lenguaje natural. El sistema analiza el significado y contexto para encontrar resultados relevantes en nuestra base de conocimiento.</p>
+                    </div>
+                    
+                    <div class="search-box">
+                        <input type="text" class="search-input" id="search-input" placeholder="¿Qué información necesitas encontrar?">
+                        <button class="search-button" id="search-button">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+                    
+                    <div class="search-info">
+                        <div class="stats-badge" id="search-stats">
+                            <i class="fas fa-chart-network"></i>
+                        </div>
+                        <div id="search-time"></div>
+                    </div>
+                </div>
+                
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <p class="loading-text">Analizando tu consulta</p>
+                </div>
+                
+                <div class="results-container" id="results-container">
+                    <!-- Resultados aquí -->
+                </div>
+            </main>
+            
+            <footer>
+                <p>Sistema de Búsqueda Semántica Avanzada &copy; 2025</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const resultsContainer = document.getElementById('results-container');
+            const loading = document.getElementById('loading');
+            const searchStats = document.getElementById('search-stats');
+            const searchTime = document.getElementById('search-time');
+            const particlesContainer = document.getElementById('particles');
+            
+            // Crear efecto de partículas de fondo
+            function createParticles() {
+                const particleCount = 30;
+                const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#00ff9d'];
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Tamaño aleatorio
+                    const size = Math.random() * 120 + 30;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Posición aleatoria
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    
+                    // Animación aleatoria
+                    const duration = Math.random() * 30 + 20;
+                    const delay = Math.random() * 10;
+                    particle.style.animation = `float ${duration}s ${delay}s infinite linear`;
+                    
+                    // Color aleatorio
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.background = `linear-gradient(135deg, ${color}, transparent)`;
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            createParticles();
+            
+            // URL de la API de Spring Boot
+            const SPRING_BOOT_API = 'http://localhost:8080/api/search';
+            
+            async function performSearch() {
+                const query = searchInput.value.trim();
+                
+                if (!query) {
+                    showError('Por favor, ingresa una consulta');
+                    return;
+                }
+                
+                showLoading();
+                clearResults();
+                
+                try {
+                    const startTime = Date.now();
+                    const response = await fetch(SPRING_BOOT_API, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text: query })
+                    });
+                    
+                    if (!response.ok) {
+                        const error = await response.text();
+                        throw new Error(`Error ${response.status}: ${error}`);
+                    }
+                    
+                    const results = await response.json();
+                    const searchDuration = Date.now() - startTime;
+                    
+                    displayResults(results, searchDuration);
+                    
+                } catch (error) {
+                    showError(`Error en la búsqueda: ${error.message}`);
+                    console.error('Error detallado:', error);
+                } finally {
+                    hideLoading();
+                }
+            }
+            
+            function showLoading() {
+                loading.style.display = 'block';
+            }
+            
+            function hideLoading() {
+                loading.style.display = 'none';
+            }
+            
+            function clearResults() {
+                resultsContainer.innerHTML = '';
+                searchStats.textContent = '';
+                searchTime.textContent = '';
+            }
+            
+            function showError(message) {
+                resultsContainer.innerHTML = `
+                    <div class="error-container fade-in">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error en la búsqueda</h3>
+                        <p>${message}</p>
+                        <p>Verifica que:</p>
+                        <ul class="error-list">
+                            <li>Spring Boot esté ejecutándose en http://localhost:8080</li>
+                            <li>La API Python esté en ejecución (puerto 8000)</li>
+                            <li>No haya errores en las consolas del servidor</li>
+                            <li>La conexión de red esté funcionando correctamente</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            function displayResults(results, searchDuration) {
+                if (!results || results.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="no-results fade-in">
+                            <i class="fas fa-search"></i>
+                            <h3>No se encontraron resultados</h3>
+                            <p>Intenta reformular tu búsqueda o utiliza términos más específicos.</p>
+                            <p>El sistema busca coincidencias semánticas, por lo que palabras relacionadas también pueden producir resultados relevantes.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                searchStats.innerHTML = `<i class="fas fa-chart-network"></i> ${results.length} resultados`;
+                searchTime.innerHTML = `<i class="fas fa-stopwatch"></i> ${searchDuration}ms`;
+                
+                resultsContainer.innerHTML = '';
+                
+                results.forEach((result, index) => {
+                    const resultCard = document.createElement('div');
+                    resultCard.className = 'result-card fade-in';
+                    resultCard.style.animationDelay = `${index * 0.1}s`;
+                    
+                    resultCard.innerHTML = `
+                        <div class="result-header">
+                            <div class="result-title">
+                                <i class="fas fa-file-alt"></i> Resultado ${index + 1}
+                            </div>
+                            <div class="similarity">
+                                <i class="fas fa-bolt"></i> ${Math.round(result.similarity * 100)}% relevante
+                            </div>
+                        </div>
+                        <div class="result-content">
+                            <p class="result-text">${result.document}</p>
+                            <div class="result-source">
+                                <i class="fas fa-database"></i> Fuente: ${result.source}
+                            </div>
+                        </div>
+                    `;
+                    
+                    resultsContainer.appendChild(resultCard);
+                });
+            }
+            
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', e => {
+                if (e.key === 'Enter') performSearch();
+            });
+            
+            // Focus en el input al cargar
+            searchInput.focus();
+        });
+    </script>
+</body>
 </html>
