@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0f1d;
-            --surface: #101726;
-            --primary: #1a233f;
-            --accent: #5e81ff;
-            --highlight: #ff5e8d;
-            --text: #e6e9f0;
-            --text-light: #a0a8c0;
-            --card: rgba(26, 35, 63, 0.5);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --bg: #0f0f17;
+            --surface: #1a1a27;
+            --primary: #2a2a3a;
+            --accent: #6c63ff;
+            --highlight: #ff6584;
+            --text: #e2e2e9;
+            --text-light: #a0a0b0;
+            --card: rgba(42, 42, 58, 0.6);
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
         
         * {
@@ -50,8 +50,9 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(10, 15, 29, 0.95);
+            background: rgba(15, 15, 23, 0.95);
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         .logo {
@@ -126,7 +127,7 @@
             transform: translate(-50%, -50%);
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(94, 129, 255, 0.1) 0%, rgba(10, 15, 29, 0) 70%);
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.1) 0%, rgba(15, 15, 23, 0) 70%);
             z-index: -1;
         }
         
@@ -151,7 +152,7 @@
             left: 0;
             width: 100%;
             height: 15px;
-            background: rgba(94, 129, 255, 0.2);
+            background: rgba(108, 99, 255, 0.2);
             z-index: -1;
         }
         
@@ -190,12 +191,12 @@
         .btn-primary {
             background: var(--accent);
             color: white;
-            box-shadow: 0 10px 30px rgba(94, 129, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(94, 129, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.4);
         }
         
         .btn-outline {
@@ -294,11 +295,22 @@
             font-size: 3.5rem;
             margin-bottom: 25px;
             color: var(--accent);
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Solución para el icono de Flutter */
+        .flutter-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(45deg, #02569B, #13B9FD);
+            -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18.76,17.24,7.87,6.35,6.35,7.87l7.05,7.05H7.87v1.77h5.53L4.81,22h1.77l6.53-6.53,7.05,7.05L22,25.19Zm1.77-5.3h1.77V17.24H20.53Z" style="fill:%23000"/></svg>') no-repeat center;
+            mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18.76,17.24,7.87,6.35,6.35,7.87l7.05,7.05H7.87v1.77h5.53L4.81,22h1.77l6.53-6.53,7.05,7.05L22,25.19Zm1.77-5.3h1.77V17.24H20.53Z" style="fill:%23000"/></svg>') no-repeat center;
         }
         
         .skill-card h3 {
             font-size: 1.8rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .skill-card p {
@@ -495,7 +507,7 @@
         .form-group textarea:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(94, 129, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
         }
         
         .form-group textarea {
@@ -514,12 +526,12 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 10px 30px rgba(94, 129, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.3);
         }
         
         .submit-btn:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(94, 129, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(108, 99, 255, 0.4);
         }
         
         /* Footer */
@@ -662,7 +674,8 @@
                 
                 <div class="skill-card">
                     <div class="skill-icon">
-                        <i class="fab fa-flutter"></i>
+                        <!-- Solución para el icono de Flutter -->
+                        <div class="flutter-icon"></div>
                     </div>
                     <h3>Flutter</h3>
                     <p>Desarrollo multiplataforma con Flutter para Android e iOS.</p>
