@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Nombre - Desarrollador Profesional</title>
+    <title>Lenier - Desarrollador Java Backend y Móvil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Variables y resets */
         :root {
             --primary: #1a1a2e;
             --secondary: #16213e;
@@ -15,13 +15,17 @@
             --text: #f1f1f1;
             --light-gray: #e0e0e0;
             --dark-gray: #333;
+            --java: #5382a1;
+            --flutter: #02569b;
+            --laravel: #ff2d20;
+            --python: #ffd343;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
@@ -29,9 +33,9 @@
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
-        /* Estructura principal */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -44,18 +48,26 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
             position: sticky;
             top: 0;
             background: rgba(26, 26, 46, 0.95);
             z-index: 100;
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--highlight);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--light-gray);
+            font-weight: 300;
+            margin-left: 5px;
         }
         
         nav ul {
@@ -74,6 +86,7 @@
             transition: color 0.3s;
             position: relative;
             padding: 5px 0;
+            font-family: 'Roboto Mono', monospace;
         }
         
         nav a:hover {
@@ -99,20 +112,68 @@
         .hero {
             display: flex;
             align-items: center;
-            min-height: 80vh;
+            min-height: 90vh;
             padding: 50px 0;
+            position: relative;
         }
         
         .hero-content {
             flex: 1;
             padding-right: 50px;
+            z-index: 2;
         }
         
         .hero-image {
             flex: 1;
             display: flex;
             justify-content: center;
+            position: relative;
         }
+        
+        .hero-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(15, 52, 96, 0.4) 0%, rgba(26, 26, 46, 0) 70%);
+            z-index: 1;
+        }
+        
+        .hero-image::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="%230f3460" stroke-width="0.5" stroke-dasharray="4 4"/></svg>');
+            background-size: 400px;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .tech-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .tech-icon {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 15s infinite linear;
+        }
+        
+        .tech-icon:nth-child(1) { top: 10%; left: 20%; animation-duration: 20s; color: var(--java); }
+        .tech-icon:nth-child(2) { top: 25%; left: 70%; animation-duration: 25s; color: var(--flutter); }
+        .tech-icon:nth-child(3) { top: 65%; left: 15%; animation-duration: 18s; color: var(--laravel); }
+        .tech-icon:nth-child(4) { top: 75%; left: 75%; animation-duration: 22s; color: var(--python); }
+        .tech-icon:nth-child(5) { top: 40%; left: 45%; animation-duration: 30s; }
         
         .profile-pic {
             width: 300px;
@@ -126,6 +187,7 @@
             justify-content: center;
             overflow: hidden;
             position: relative;
+            z-index: 2;
         }
         
         .profile-pic::before {
@@ -156,12 +218,28 @@
             font-size: 1.8rem;
             margin-bottom: 30px;
             color: var(--highlight);
+            font-weight: 500;
         }
         
         .description {
             font-size: 1.2rem;
             margin-bottom: 40px;
             max-width: 600px;
+            font-family: 'Roboto Mono', monospace;
+            color: var(--light-gray);
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: var(--light-gray);
+        }
+        
+        .location i {
+            margin-right: 10px;
+            color: var(--highlight);
         }
         
         .btn {
@@ -175,6 +253,8 @@
             transition: all 0.3s;
             border: 2px solid var(--highlight);
             box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+            font-family: 'Roboto Mono', monospace;
+            margin-right: 15px;
         }
         
         .btn:hover {
@@ -185,7 +265,6 @@
         
         .btn-outline {
             background: transparent;
-            margin-left: 15px;
         }
         
         .btn-outline:hover {
@@ -197,17 +276,23 @@
             padding: 80px 0;
         }
         
-        section h2 {
-            font-size: 2.5rem;
+        .section-title {
             text-align: center;
             margin-bottom: 60px;
             position: relative;
         }
         
-        section h2::after {
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
             content: "";
             position: absolute;
-            bottom: -15px;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
@@ -231,6 +316,8 @@
             text-align: center;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
         }
         
         .skill-card:hover {
@@ -238,15 +325,35 @@
             background: rgba(255,255,255,0.1);
         }
         
+        .skill-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--java);
+        }
+        
+        .skill-card.java::before { background: var(--java); }
+        .skill-card.flutter::before { background: var(--flutter); }
+        .skill-card.laravel::before { background: var(--laravel); }
+        .skill-card.python::before { background: var(--python); }
+        
         .skill-icon {
             font-size: 3rem;
             margin-bottom: 20px;
-            color: var(--highlight);
+            color: var(--light-gray);
         }
         
         .skill-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
+        }
+        
+        .skill-card p {
+            color: var(--light-gray);
+            font-family: 'Roboto Mono', monospace;
         }
         
         /* Proyectos */
@@ -263,10 +370,21 @@
             transition: transform 0.3s;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
         }
         
         .project-card:hover {
             transform: translateY(-10px);
+        }
+        
+        .project-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--highlight);
         }
         
         .project-image {
@@ -278,6 +396,18 @@
             color: white;
             font-size: 1.5rem;
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
         }
         
         .project-content {
@@ -292,6 +422,7 @@
         .project-content p {
             margin-bottom: 20px;
             color: var(--light-gray);
+            font-family: 'Roboto Mono', monospace;
         }
         
         .project-links {
@@ -305,6 +436,12 @@
             color: var(--highlight);
             text-decoration: none;
             font-weight: 500;
+            font-family: 'Roboto Mono', monospace;
+            transition: transform 0.3s;
+        }
+        
+        .project-link:hover {
+            transform: translateX(5px);
         }
         
         .project-link i {
@@ -370,6 +507,7 @@
             border-radius: 5px;
             color: var(--text);
             font-size: 1rem;
+            font-family: 'Roboto Mono', monospace;
         }
         
         .contact-form textarea {
@@ -383,6 +521,8 @@
             padding: 30px 0;
             border-top: 1px solid rgba(255,255,255,0.1);
             margin-top: 50px;
+            font-family: 'Roboto Mono', monospace;
+            color: var(--light-gray);
         }
         
         /* Animaciones */
@@ -392,6 +532,15 @@
             }
             to {
                 transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            100% {
+                transform: translate(100px, 100px) rotate(360deg);
             }
         }
         
@@ -413,6 +562,10 @@
             
             .hero-buttons {
                 display: flex;
+                justify-content: center;
+            }
+            
+            .location {
                 justify-content: center;
             }
         }
@@ -449,7 +602,7 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">DevPortfolio</div>
+            <div class="logo">Lenier<span>.dev</span></div>
             <nav>
                 <ul>
                     <li><a href="#hero">Inicio</a></li>
@@ -462,80 +615,109 @@
 
         <section id="hero" class="hero">
             <div class="hero-content">
-                <h1>Hola, soy <span style="color: var(--highlight);">Tu Nombre</span></h1>
-                <div class="tagline">Desarrollador Full Stack</div>
+                <h1>Hola, soy <span style="color: var(--highlight);">Lenier</span></h1>
+                <div class="tagline">Desarrollador Java Backend y Móvil</div>
+                <div class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Cuba</span>
+                </div>
                 <p class="description">
-                    Apasionado desarrollador con experiencia en crear soluciones web innovadoras y eficientes. 
-                    Me especializo en JavaScript, React y Node.js, construyendo aplicaciones escalables 
-                    con las mejores prácticas de la industria.
+                    Desarrollador especializado en Java backend y aplicaciones móviles con Java y Flutter. 
+                    Con experiencia en desarrollo de ecommerce, trabajo con bases vectoriales en Python 
+                    y desarrollo web con Laravel. Apasionado por crear soluciones eficientes y escalables.
                 </p>
                 <div class="hero-buttons">
                     <a href="#projects" class="btn">Ver proyectos</a>
-                    <a href="#contact" class="btn btn-outline">Contactar</a>
+                    <a href="https://github.com/lenier522" target="_blank" class="btn btn-outline">GitHub</a>
                 </div>
             </div>
             <div class="hero-image">
+                <div class="hero-bg"></div>
+                <div class="tech-icons">
+                    <div class="tech-icon"><i class="fab fa-java"></i></div>
+                    <div class="tech-icon"><i class="fab fa-android"></i></div>
+                    <div class="tech-icon"><i class="fab fa-laravel"></i></div>
+                    <div class="tech-icon"><i class="fab fa-python"></i></div>
+                    <div class="tech-icon"><i class="fab fa-github"></i></div>
+                </div>
                 <div class="profile-pic">
                     <div style="color: white; font-size: 5rem; text-align: center;">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-code"></i>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="skills">
-            <h2>Mis Habilidades</h2>
+            <div class="section-title">
+                <h2>Mis Habilidades</h2>
+            </div>
             <div class="skills-container">
-                <div class="skill-card">
+                <div class="skill-card java">
                     <div class="skill-icon">
-                        <i class="fab fa-js"></i>
+                        <i class="fab fa-java"></i>
                     </div>
-                    <h3>JavaScript</h3>
-                    <p>Desarrollo de aplicaciones interactivas con ES6+ y frameworks modernos.</p>
+                    <h3>Java Backend</h3>
+                    <p>Desarrollo de aplicaciones robustas con Spring Boot, microservicios y APIs RESTful.</p>
                 </div>
                 
                 <div class="skill-card">
                     <div class="skill-icon">
-                        <i class="fab fa-react"></i>
+                        <i class="fab fa-android"></i>
                     </div>
-                    <h3>React</h3>
-                    <p>Creación de interfaces de usuario eficientes y componentes reutilizables.</p>
+                    <h3>Android</h3>
+                    <p>Creación de aplicaciones móviles nativas con Java y Kotlin para Android.</p>
+                </div>
+                
+                <div class="skill-card flutter">
+                    <div class="skill-icon">
+                        <i class="fab fa-flutter"></i>
+                    </div>
+                    <h3>Flutter</h3>
+                    <p>Desarrollo multiplataforma con Flutter para Android e iOS.</p>
+                </div>
+                
+                <div class="skill-card laravel">
+                    <div class="skill-icon">
+                        <i class="fab fa-laravel"></i>
+                    </div>
+                    <h3>Laravel</h3>
+                    <p>Desarrollo de aplicaciones web con el framework PHP Laravel.</p>
                 </div>
                 
                 <div class="skill-card">
                     <div class="skill-icon">
-                        <i class="fab fa-node-js"></i>
+                        <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <h3>Node.js</h3>
-                    <p>Desarrollo backend con Express, MongoDB y arquitecturas RESTful.</p>
+                    <h3>Ecommerce</h3>
+                    <p>Implementación de soluciones de comercio electrónico con diversas tecnologías.</p>
                 </div>
                 
-                <div class="skill-card">
+                <div class="skill-card python">
                     <div class="skill-icon">
-                        <i class="fas fa-database"></i>
+                        <i class="fab fa-python"></i>
                     </div>
-                    <h3>Bases de Datos</h3>
-                    <p>MongoDB, PostgreSQL, Firebase y diseño de esquemas eficientes.</p>
+                    <h3>Python</h3>
+                    <p>Trabajo con bases vectoriales y desarrollo de scripts en Python.</p>
                 </div>
             </div>
         </section>
 
         <section id="projects">
-            <h2>Proyectos Destacados</h2>
+            <div class="section-title">
+                <h2>Proyectos Destacados</h2>
+            </div>
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-image">
-                        E-Commerce App
+                        NextChat - App de Mensajería
                     </div>
                     <div class="project-content">
-                        <h3>Tienda Online React</h3>
-                        <p>Plataforma de comercio electrónico con carrito de compras, autenticación de usuarios y panel de administración.</p>
+                        <h3>NextChat</h3>
+                        <p>Aplicación móvil de chat con autenticación por correo electrónico y mensajería en tiempo real.</p>
                         <div class="project-links">
-                            <a href="#" class="project-link">
-                                <i class="fab fa-github"></i> Código
-                            </a>
-                            <a href="#" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Demo
+                            <a href="https://github.com/lenier522/NextChat" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Ver código
                             </a>
                         </div>
                     </div>
@@ -543,17 +725,14 @@
                 
                 <div class="project-card">
                     <div class="project-image">
-                        Dashboard Analytics
+                        Loteri Flutter - App de Lotería
                     </div>
                     <div class="project-content">
-                        <h3>Panel de Análisis</h3>
-                        <p>Dashboard interactivo con visualización de datos en tiempo real usando Chart.js y APIs RESTful.</p>
+                        <h3>Loteri Flutter</h3>
+                        <p>Aplicación móvil desarrollada con Flutter para gestión de loterías y sorteos.</p>
                         <div class="project-links">
-                            <a href="#" class="project-link">
-                                <i class="fab fa-github"></i> Código
-                            </a>
-                            <a href="#" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Demo
+                            <a href="https://github.com/lenier522/loteri_flutter" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Ver código
                             </a>
                         </div>
                     </div>
@@ -561,17 +740,59 @@
                 
                 <div class="project-card">
                     <div class="project-image">
-                        Social Media
+                        Tienda Laravel - Ecommerce
                     </div>
                     <div class="project-content">
-                        <h3>Red Social MERN</h3>
-                        <p>Aplicación social completa con perfiles de usuario, publicaciones, comentarios y notificaciones en tiempo real.</p>
+                        <h3>Tienda Laravel</h3>
+                        <p>Solución de comercio electrónico desarrollada con el framework Laravel.</p>
                         <div class="project-links">
-                            <a href="#" class="project-link">
-                                <i class="fab fa-github"></i> Código
+                            <a href="https://github.com/lenier522/tienda_laravel" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Ver código
                             </a>
-                            <a href="#" class="project-link">
-                                <i class="fas fa-external-link-alt"></i> Demo
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        DeltaChat Android - Mensajería
+                    </div>
+                    <div class="project-content">
+                        <h3>DeltaChat Android</h3>
+                        <p>Colaboración en el desarrollo de la aplicación de mensajería DeltaChat para Android.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/lenier522/deltachat-android" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Ver código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        Ecommerce SpringBoot - Tienda Online
+                    </div>
+                    <div class="project-content">
+                        <h3>Ecommerce SpringBoot</h3>
+                        <p>Plataforma de comercio electrónico desarrollada con Spring Boot.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/lenier522/Ecommerce_Online" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Ver código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        Update Checker - Librería Android
+                    </div>
+                    <div class="project-content">
+                        <h3>Update Checker</h3>
+                        <p>Librería para Android que verifica actualizaciones de aplicaciones.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/lenier522/Update-Checker" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> Ver código
                             </a>
                         </div>
                     </div>
@@ -580,7 +801,9 @@
         </section>
 
         <section id="contact">
-            <h2>Contacto</h2>
+            <div class="section-title">
+                <h2>Contacto</h2>
+            </div>
             <div class="contact-container">
                 <div class="contact-info">
                     <div class="contact-item">
@@ -599,7 +822,17 @@
                         </div>
                         <div>
                             <h3>Ubicación</h3>
-                            <p>Ciudad, País</p>
+                            <p>Cuba</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div>
+                            <h3>GitHub</h3>
+                            <p>github.com/lenier522</p>
                         </div>
                     </div>
                     
@@ -610,7 +843,7 @@
                         <div>
                             <h3>Redes Sociales</h3>
                             <div class="social-links">
-                                <a href="#" class="social-link">
+                                <a href="https://github.com/lenier522" target="_blank" class="social-link">
                                     <i class="fab fa-github"></i>
                                 </a>
                                 <a href="#" class="social-link">
@@ -619,16 +852,13 @@
                                 <a href="#" class="social-link">
                                     <i class="fab fa-twitter"></i>
                                 </a>
-                                <a href="#" class="social-link">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="contact-form">
-                    <form>
+                    <form id="contactForm">
                         <input type="text" placeholder="Nombre" required>
                         <input type="email" placeholder="Email" required>
                         <input type="text" placeholder="Asunto" required>
@@ -640,7 +870,8 @@
         </section>
 
         <footer>
-            <p>&copy; 2023 Tu Nombre. Todos los derechos reservados.</p>
+            <p>&copy; 2023 Lenier - Desarrollador Java Backend y Móvil</p>
+            <p>Desarrollado con pasión desde Cuba</p>
         </footer>
     </div>
 
@@ -660,39 +891,41 @@
             });
         });
         
-        // Efecto de aparición al hacer scroll
-        const observerOptions = {
-            threshold: 0.1
-        };
-        
+        // Animación de aparición de elementos al hacer scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('animate');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
         
         document.querySelectorAll('.skill-card, .project-card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(20px)';
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            
             observer.observe(card);
-            
-            card.classList.add('visible');
         });
         
-        // Actualizar dinámicamente la clase para la animación
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.skill-card, .project-card');
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 150 * index);
-            });
+        // Formulario de contacto
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.');
+            this.reset();
         });
+        
+        // Animación de carga inicial
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelector('.hero-content').style.opacity = '1';
+                document.querySelector('.hero-content').style.transform = 'translateY(0)';
+            }, 300);
+        });
+        
+        // Inicializar estilos para animaciones
+        document.querySelector('.hero-content').style.opacity = '0';
+        document.querySelector('.hero-content').style.transform = 'translateY(20px)';
+        document.querySelector('.hero-content').style.transition = 'opacity 0.8s ease, transform 0.8s ease';
     </script>
 </body>
 </html>
